@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>myUplink OAuth Callback</title>
+<style>
+  body{font:14px system-ui;margin:2rem;max-width:700px}
+  code{background:#f5f5f5;padding:.2rem .3rem;border-radius:.25rem}
+  button{padding:.5rem .75rem;border:1px solid #ccc;border-radius:.4rem;cursor:pointer}
+</style>
+<h1>Authorization received</h1>
+<p><b>State:</b> <code id="state">(waiting)</code></p>
+<p><b>Code:</b> <code id="code">(waiting)</code> <button id="copy">Copy code</button></p>
+<p>Copy the code and paste it back into the app. You can close this tab after that.</p>
+<script>
+  const q = new URLSearchParams(location.search);
+  const code = q.get('code') || '';
+  const state = q.get('state') || '';
+  document.getElementById('state').textContent = state || '(missing)';
+  document.getElementById('code').textContent = code || '(missing)';
+  document.getElementById('copy').onclick = async () => {
+    try { await navigator.clipboard.writeText(code || ''); alert('Code copied'); }
+    catch { alert('Copy failed—select the code and copy manually.'); }
+  };
+</script>
